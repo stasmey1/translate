@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Word
 from .forms import WordForm
 
+from rest_framework import generics, viewsets
+from .serializers import WordSerializer
+
+
 
 def index(request):
     if request.GET.get('level'):
@@ -61,3 +65,8 @@ def delete_word(request, pk):
 
     template = 'main/delete_word.html'
     return render(request, template, locals())
+
+class WordVeiwSet(viewsets.ModelViewSet):
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+
