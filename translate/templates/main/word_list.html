@@ -1,0 +1,54 @@
+{% extends 'main/index.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="col mt-3 mb-3">
+    <form action="">
+        <div class="row">
+            <div class="col-1">
+                <button class="btn btn-success" type="submit" name='level' value="easy">easy</button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-warning" type="submit" name='level' value="medium">medium</button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-danger" type="submit" name='level' value="hard">hard</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<a href="{% url 'index' %}" class="btn btn-primary" role="button">Все</a>
+<a href="{% url 'list_word_not_done' %}" class="btn btn-primary" role="button">Неизученные</a>
+
+
+<div class="row mt-3">
+    <div class="col-10">
+        <div class="row">
+            {% for word in words %}
+            <div class="col-3 mb-3">
+                <div class="card">
+                    <div class="card-body" {% if word.done %} style="color:green" {% endif %}>
+                        <h5 class="card-title">{{word.en}}</h5>
+                        <h5 class="card-title">{{word.ru}}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="col">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit">add</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
