@@ -1,5 +1,18 @@
 from django.db import models
 from django.shortcuts import reverse
+from django.core.exceptions import ValidationError
+from django.core import validators
+import string
+
+
+def validate_ru(ru):
+    if any([i.lower() not in ''.join([chr(i) for i in range(ord('а'), ord('я') + 1)]) for i in ru]):
+        raise ValidationError(message='только кирилица', code='invalid')
+
+
+def validate_en(en):
+    if any([i not in string.ascii_letters for i in en]):
+        raise ValidationError('только латиница')
 
 
 class Language(models.Model):
@@ -24,8 +37,8 @@ class Word(models.Model):
         ('medium', 'средний'),
         ('hard', 'сложный'),
     )
-    ru = models.CharField(max_length=100)
-    en = models.CharField(max_length=100)
+    ru = models.CharField(max_length=100, validators=[validate_ru])
+    en = models.CharField(max_length=100, validators=[validate_en])
     type = models.CharField(max_length=10, choices=TYPE, blank=True, null=True, verbose_name='Тип')
     level = models.CharField(max_length=10, choices=LEVEL, blank=True, null=True, verbose_name='Уровень сложности')
     time_create = models.DateTimeField(auto_now_add=True)
