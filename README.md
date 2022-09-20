@@ -1,2 +1,5 @@
 Небольшой Django проект, позволяющий ищучать новые слова английского языка.
-здесь применяется Django REST framework, используется django-crispy-forms 
+
+Здесь применяется Django REST framework, используется django-crispy-forms.
+
+Так же раелизована валидация полей модели.
