@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Word
 from .forms import WordForm
+from .utils import add_color
 
 from rest_framework import viewsets
 from .serializers import WordSerializer
@@ -11,6 +12,7 @@ def index(request):
         words = Word.objects.filter(level=request.GET.get('level'))
     else:
         words = Word.objects.all()
+    [add_color(word) for word in words]
     form = WordForm()
     template = 'main/word_list.html'
 
@@ -29,6 +31,7 @@ def list_word_not_done(request):
         words = Word.objects.filter(level=request.GET.get('level'), done=False)
     else:
         words = Word.objects.filter(done=False)
+    [add_color(word) for word in words]
     form = WordForm()
     template = 'main/word_list.html'
     return render(request, template, locals())

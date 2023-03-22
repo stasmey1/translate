@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row mt-3">
     <div class="row">
         {% for word in words %}
         <div class="col-3 mb-3">
@@ -12,8 +12,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{word.en}}</h5>
                     <h5 class="card-title">{{word.ru}}</h5>
-                    <a href="{{ word.get_absolute_url }}" class="btn btn-primary">edit</a>
-                    <a href="{% url 'delete_word' word.pk %}" class="btn btn-primary">delete</a>
+                    <a href="{{ word.get_absolute_url }}" class="btn btn-primary">Изменить</a>
+                    <a href="{% url 'delete_word' word.pk %}" class="btn btn-danger">Удалить</a>
                 </div>
             </div>
         </div>
